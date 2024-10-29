@@ -10,6 +10,7 @@ class Order {
   final String userId;
   final DateTime orderedAt;
   final int status;
+  final double totalPrice;
 
   Order({
     required this.id,
@@ -19,6 +20,7 @@ class Order {
     required this.userId,
     required this.orderedAt,
     required this.status,
+    required this.totalPrice,
   });
 
   Map<String, dynamic> toMap() {
@@ -28,20 +30,25 @@ class Order {
       'quantity': quantity,
       'address': address,
       'userId': userId,
-      'orderedAt': orderedAt.toIso8601String(), 
+      'orderedAt': orderedAt.toIso8601String(),
       'status': status,
+      'totalPrice': totalPrice,
     };
   }
 
   factory Order.fromMap(Map<String, dynamic> map) {
     return Order(
       id: map['_id'] ?? '',
-      products: List<Product>.from(map['products']?.map((x) => Product.fromMap(x['product']))),
+      products: List<Product>.from(
+          map['products']?.map((x) => Product.fromMap(x['product']))),
       quantity: List<int>.from(map['products']?.map((x) => x['quantity'])),
       address: map['address'] ?? '',
       userId: map['userId'] ?? '',
       orderedAt: DateTime.parse(map['orderedAt']),
-      status: map['status'] is String ? int.parse(map['status']) : map['status'] ?? 0,
+      status: map['status'] is String
+          ? int.parse(map['status'])
+          : map['status'] ?? 0,
+      totalPrice: map['totalPrice']?.toDouble() ?? 0.0,
     );
   }
 

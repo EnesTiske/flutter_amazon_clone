@@ -2,17 +2,18 @@ import 'package:amazon_clone_tutorial/common/widgets/loader.dart';
 import 'package:amazon_clone_tutorial/constants/global_variables.dart';
 import 'package:amazon_clone_tutorial/features/account/services/account_services.dart';
 import 'package:amazon_clone_tutorial/features/account/widgets/single_product.dart';
+import 'package:amazon_clone_tutorial/features/order_details/screens/order_details_screen.dart';
 import 'package:amazon_clone_tutorial/models/order.dart';
 import 'package:flutter/material.dart';
 
-class Ordes extends StatefulWidget {
-  const Ordes({super.key});
+class Orders extends StatefulWidget {
+  const Orders({super.key});
 
   @override
-  State<Ordes> createState() => _OrdesState();
+  State<Orders> createState() => _OrdersState();
 }
 
-class _OrdesState extends State<Ordes> {
+class _OrdersState extends State<Orders> {
   List<Order>? orders;
   final AccountServices accountServices = AccountServices();
 
@@ -73,8 +74,17 @@ class _OrdesState extends State<Ordes> {
                   scrollDirection: Axis.horizontal,
                   itemCount: orders!.length,
                   itemBuilder: (context, index) {
-                    return SingleProduct(
-                      image: orders![index].products[0].images[0],
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          OrderDetailsScreen.routeName,
+                          arguments: orders![index],
+                        );
+                      },
+                      child: SingleProduct(
+                        image: orders![index].products[0].images[0],
+                      ),
                     );
                   },
                 ),
