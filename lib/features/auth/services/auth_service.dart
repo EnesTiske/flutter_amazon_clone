@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:amazon_clone_tutorial/features/home/screens/home_screen.dart';
+import 'package:amazon_clone_tutorial/common/widgets/bottom_bar.dart';
 import 'package:amazon_clone_tutorial/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -26,7 +26,9 @@ class AuthService {
         address: '',
         type: '',
         token: '',
+        cart: [],
       );
+
 
       http.Response res = await http.post(
         Uri.parse('$uri/api/signup'),
@@ -35,6 +37,7 @@ class AuthService {
           'Content-Type': 'application/json; charset=UTF-8',
         },
       );
+
 
       httpErrorHandle(
         res: res,
@@ -69,6 +72,22 @@ class AuthService {
         },
       );
 
+      // httpErrorHandle(
+      //   res: res,
+      //   context: context,
+      //   onSuccess: () async {
+      //     SharedPreferences prefs = await SharedPreferences.getInstance();
+      //     Provider.of<UserProvider>(context, listen: false).setUser(res.body);
+      //     await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
+
+      //     Navigator.pushNamedAndRemoveUntil(
+      //       context,
+      //       BottomBar.routeName,
+      //       (route) => false,
+      //     );
+      //   },
+      // );
+
       httpErrorHandle(
         res: res,
         context: context,
@@ -76,21 +95,24 @@ class AuthService {
           SharedPreferences prefs = await SharedPreferences.getInstance();
           Provider.of<UserProvider>(context, listen: false).setUser(res.body);
           await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            HomeScreen.routeName,
-            (route) => false,
-          );
+
+          // Navigasyon işlemi async olmayan bir üst seviyede yapılabilir
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              BottomBar.routeName,
+              (route) => false,
+            );
+          });
         },
       );
     } catch (e) {
+      print(e.toString());
       showSnackBar(context, e.toString());
     }
   }
 
-  void getUserData(
-    BuildContext context
-  ) async {
+  void getUserData(BuildContext context) async {
     try {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String? token = prefs.getString('x-auth-token');
@@ -120,6 +142,7 @@ class AuthService {
         userProvider.setUser(userRes.body);
       }
     } catch (e) {
+      print(e.toString());
       showSnackBar(context, e.toString());
     }
   }
