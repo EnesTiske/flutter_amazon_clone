@@ -30,6 +30,7 @@ class AddressServices {
 
       httpErrorHandle(
         res: res,
+        // ignore: use_build_context_synchronously
         context: context,
         onSuccess: () {
           User user = userProvider.user.copyWith(
@@ -39,8 +40,8 @@ class AddressServices {
         },
       );
     } catch (e) {
-      print(e);
-      showSnackBar(context as BuildContext, e.toString());
+      // ignore: use_build_context_synchronously
+      showSnackBar(context, e.toString());
     }
   }
 
@@ -64,6 +65,7 @@ class AddressServices {
 
       httpErrorHandle(
         res: res,
+        // ignore: use_build_context_synchronously
         context: context,
         onSuccess: () {
           showSnackBar(context, 'Order placed successfully');
@@ -74,8 +76,7 @@ class AddressServices {
         },
       );
     } catch (e) {
-      print('1');
-      print(e);
+      // ignore: use_build_context_synchronously
       showSnackBar(context, e.toString());
     }
   }
@@ -98,13 +99,14 @@ class AddressServices {
 
       httpErrorHandle(
         res: res,
+        // ignore: use_build_context_synchronously
         context: context,
         onSuccess: () {
           showSnackBar(context, 'Product deleted successfully');
         },
       );
     } catch (e) {
-      print('2');
+      // ignore: use_build_context_synchronously
       showSnackBar(context, e.toString());
     }
   }

@@ -26,6 +26,7 @@ class HomeServices {
       );
       httpErrorHandle(
         res: res,
+        // ignore: use_build_context_synchronously
         context: context,
         onSuccess: () {
           for (int i = 0; i < jsonDecode(res.body).length; i++) {
@@ -47,7 +48,7 @@ class HomeServices {
         },
       );
     } catch (e) {
-      print(e);
+      // ignore: use_build_context_synchronously
       showSnackBar(context, e.toString());
     }
     return productList;
@@ -75,12 +76,14 @@ class HomeServices {
       );
       httpErrorHandle(
         res: res,
+        // ignore: use_build_context_synchronously
         context: context,
         onSuccess: () {
           product = Product.fromJson(res.body);
         },
       );
     } catch (e) {
+      // ignore: use_build_context_synchronously
       showSnackBar(context, e.toString());
     }
     return product;

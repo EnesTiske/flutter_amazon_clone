@@ -6,9 +6,9 @@ class CategoryProductsChart extends StatelessWidget {
   final List<Sales> salesData;
 
   const CategoryProductsChart({
-    Key? key,
+    super.key,
     required this.salesData,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

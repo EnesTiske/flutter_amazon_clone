@@ -69,9 +69,9 @@ class SearchedProduct extends StatelessWidget {
                   Container(
                     width: 235,
                     padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Text(
+                    child: const Text(
                       'In Stock',
-                      style: const TextStyle(
+                      style: TextStyle(
                         color: Colors.teal,
                       ),
                       maxLines: 2,

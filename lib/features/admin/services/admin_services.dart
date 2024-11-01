@@ -10,7 +10,6 @@ import 'package:amazon_clone_tutorial/models/product.dart';
 import 'package:amazon_clone_tutorial/providers/user_provider.dart';
 import 'package:cloudinary_public/cloudinary_public.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
@@ -56,6 +55,7 @@ class AdminServices {
 
       httpErrorHandle(
         res: res,
+        // ignore: use_build_context_synchronously
         context: context,
         onSuccess: () {
           showSnackBar(context, 'Product added successfully');
@@ -63,7 +63,8 @@ class AdminServices {
         },
       );
     } catch (e) {
-      showSnackBar(context as BuildContext, e.toString());
+      // ignore: use_build_context_synchronously
+      showSnackBar(context, e.toString());
     }
   }
 
@@ -79,6 +80,7 @@ class AdminServices {
 
       httpErrorHandle(
         res: res,
+        // ignore: use_build_context_synchronously
         context: context,
         onSuccess: () {
           for (int i = 0; i < jsonDecode(res.body).length; i++) {
@@ -101,6 +103,7 @@ class AdminServices {
         },
       );
     } catch (e) {
+      // ignore: use_build_context_synchronously
       showSnackBar(context, e.toString());
     }
     return productList;
@@ -124,12 +127,14 @@ class AdminServices {
 
       httpErrorHandle(
         res: res,
+        // ignore: use_build_context_synchronously
         context: context,
         onSuccess: () {
           showSnackBar(context, 'Product deleted successfully');
         },
       );
     } catch (e) {
+      // ignore: use_build_context_synchronously
       showSnackBar(context, e.toString());
     }
   }
@@ -146,6 +151,7 @@ class AdminServices {
 
       httpErrorHandle(
         res: res,
+        // ignore: use_build_context_synchronously
         context: context,
         onSuccess: () {
           for (int i = 0; i < jsonDecode(res.body).length; i++) {
@@ -168,6 +174,7 @@ class AdminServices {
         },
       );
     } catch (e) {
+      // ignore: use_build_context_synchronously
       showSnackBar(context, e.toString());
     }
     return orderList;
@@ -195,10 +202,12 @@ class AdminServices {
 
       httpErrorHandle(
         res: res,
+        // ignore: use_build_context_synchronously
         context: context,
         onSuccess: onSuccess,
       );
     } catch (e) {
+      // ignore: use_build_context_synchronously
       showSnackBar(context, e.toString());
     }
   }
@@ -216,6 +225,7 @@ class AdminServices {
 
       httpErrorHandle(
         res: res,
+        // ignore: use_build_context_synchronously
         context: context,
         onSuccess: () {
           var response = jsonDecode(res.body);
@@ -230,6 +240,7 @@ class AdminServices {
         },
       );
     } catch (e) {
+      // ignore: use_build_context_synchronously
       showSnackBar(context, e.toString());
     }
     return {

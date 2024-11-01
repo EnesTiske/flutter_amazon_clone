@@ -31,6 +31,7 @@ class ProductDetailsServices {
 
       httpErrorHandle(
         res: res,
+        // ignore: use_build_context_synchronously
         context: context,
         onSuccess: () {
           User user =
@@ -40,7 +41,8 @@ class ProductDetailsServices {
       );
 
     } catch (e) {
-      showSnackBar(context as BuildContext, e.toString());
+      // ignore: use_build_context_synchronously
+      showSnackBar(context, e.toString());
     }
   }
 
@@ -66,12 +68,13 @@ class ProductDetailsServices {
 
       httpErrorHandle(
         res: res,
+        // ignore: use_build_context_synchronously
         context: context,
         onSuccess: () {},
       );
     } catch (e) {
-      print(e);
-      showSnackBar(context as BuildContext, e.toString());
+      // ignore: use_build_context_synchronously
+      showSnackBar(context, e.toString());
     }
   }
 }

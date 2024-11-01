@@ -25,6 +25,7 @@ class AccountServices {
       );
       httpErrorHandle(
         res: res,
+        // ignore: use_build_context_synchronously
         context: context,
         onSuccess: () {
           for (int i = 0; i < jsonDecode(res.body).length; i++) {
@@ -39,7 +40,7 @@ class AccountServices {
         },
       );
     } catch (e) {
-      print(e);
+      // ignore: use_build_context_synchronously
       showSnackBar(context, e.toString());
     }
     return orderList;
@@ -51,11 +52,13 @@ class AccountServices {
           await SharedPreferences.getInstance();
       await sharedPreferences.setString('z-auth-token', '');
       Navigator.pushNamedAndRemoveUntil(
+        // ignore: use_build_context_synchronously
         context,
         AuthScreen.routeName,
         (route) => false,
       );
     } catch (e) {
+      // ignore: use_build_context_synchronously
       showSnackBar(context, e.toString());
     }
   }

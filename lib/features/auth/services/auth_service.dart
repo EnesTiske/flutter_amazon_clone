@@ -41,6 +41,7 @@ class AuthService {
 
       httpErrorHandle(
         res: res,
+        // ignore: use_build_context_synchronously
         context: context,
         onSuccess: () {
           showSnackBar(
@@ -50,7 +51,7 @@ class AuthService {
         },
       );
     } catch (e) {
-      print(e.toString());
+      // ignore: use_build_context_synchronously
       showSnackBar(context, e.toString());
     }
   }
@@ -90,9 +91,11 @@ class AuthService {
 
       httpErrorHandle(
         res: res,
+        // ignore: use_build_context_synchronously
         context: context,
         onSuccess: () async {
           SharedPreferences prefs = await SharedPreferences.getInstance();
+          // ignore: use_build_context_synchronously
           Provider.of<UserProvider>(context, listen: false).setUser(res.body);
           await prefs.setString('x-auth-token', jsonDecode(res.body)['token']);
 
@@ -107,7 +110,7 @@ class AuthService {
         },
       );
     } catch (e) {
-      print(e.toString());
+      // ignore: use_build_context_synchronously
       showSnackBar(context, e.toString());
     }
   }
@@ -138,11 +141,12 @@ class AuthService {
           'x-auth-token': token,
         });
 
+        // ignore: use_build_context_synchronously
         var userProvider = Provider.of<UserProvider>(context, listen: false);
         userProvider.setUser(userRes.body);
       }
     } catch (e) {
-      print(e.toString());
+      // ignore: use_build_context_synchronously
       showSnackBar(context, e.toString());
     }
   }
