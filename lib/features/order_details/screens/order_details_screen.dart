@@ -1,8 +1,12 @@
+import 'package:amazon_clone_tutorial/common/widgets/custom_button.dart';
+import 'package:amazon_clone_tutorial/features/admin/services/admin_services.dart';
+import 'package:amazon_clone_tutorial/providers/user_provider.dart';
 import 'package:intl/intl.dart';
 import 'package:amazon_clone_tutorial/constants/global_variables.dart';
 import 'package:amazon_clone_tutorial/features/search/screen/search_screen.dart';
 import 'package:amazon_clone_tutorial/models/order.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class OrderDetailsScreen extends StatefulWidget {
   static const String routeName = '/order-details';
@@ -15,6 +19,7 @@ class OrderDetailsScreen extends StatefulWidget {
 
 class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   int currentStep = 0;
+  final AdminServices adminServices = AdminServices();
 
   void navigateToSearchScreen(String query) {
     Navigator.pushNamed(
@@ -30,8 +35,22 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
     currentStep = widget.order.status;
   }
 
+  void changeOrderStatus(int status) {
+    adminServices.changeOrderStatus(
+      context: context,
+      status: status + 1,
+      order: widget.order,
+      onSuccess: () {
+        setState(() {
+          currentStep += 1;
+        });
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context).user;
     return Scaffold(
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(50),
@@ -210,6 +229,12 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                   child: Stepper(
                     currentStep: currentStep,
                     controlsBuilder: (context, details) {
+                      if (user.type == 'admin') {
+                        return CustomButton(
+                          text: 'Done',
+                          onTap: () => changeOrderStatus(details.currentStep),
+                        );
+                      }
                       return const SizedBox();
                     },
                     steps: [
@@ -219,9 +244,13 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           'Your order is yet to be delivered',
                         ),
                         isActive: currentStep > 0,
-                        state: currentStep > 0 ? StepState.complete : StepState.indexed,
-                        stepStyle: currentStep > 0 ? const StepStyle(color: GlobalVariables.secondaryColor) : const StepStyle(color: Colors.grey),
-
+                        state: currentStep > 0
+                            ? StepState.complete
+                            : StepState.indexed,
+                        stepStyle: currentStep > 0
+                            ? const StepStyle(
+                                color: GlobalVariables.secondaryColor)
+                            : const StepStyle(color: Colors.grey),
                       ),
                       Step(
                         title: const Text('Completed'),
@@ -229,8 +258,13 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           'Your order has ben delivered, you are yet to sign',
                         ),
                         isActive: currentStep > 1,
-                        state: currentStep > 1 ? StepState.complete : StepState.indexed,
-                        stepStyle: currentStep > 1 ? const StepStyle(color: GlobalVariables.secondaryColor) : const StepStyle(color: Colors.grey),
+                        state: currentStep > 1
+                            ? StepState.complete
+                            : StepState.indexed,
+                        stepStyle: currentStep > 1
+                            ? const StepStyle(
+                                color: GlobalVariables.secondaryColor)
+                            : const StepStyle(color: Colors.grey),
                       ),
                       Step(
                         title: const Text('Received'),
@@ -238,8 +272,13 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           'Your order has been delivered and signed by you',
                         ),
                         isActive: currentStep > 2,
-                        state: currentStep > 2 ? StepState.complete : StepState.indexed,
-                        stepStyle: currentStep > 2 ? const StepStyle(color: GlobalVariables.secondaryColor) : const StepStyle(color: Colors.grey),
+                        state: currentStep > 2
+                            ? StepState.complete
+                            : StepState.indexed,
+                        stepStyle: currentStep > 2
+                            ? const StepStyle(
+                                color: GlobalVariables.secondaryColor)
+                            : const StepStyle(color: Colors.grey),
                       ),
                       Step(
                         title: const Text('Delivered'),
@@ -247,8 +286,13 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           'Your order has been delivered and signed by you!',
                         ),
                         isActive: currentStep >= 3,
-                        state: currentStep >= 3 ? StepState.complete : StepState.indexed,
-                        stepStyle: currentStep >= 3 ? const StepStyle(color: GlobalVariables.secondaryColor) : const StepStyle(color: Colors.grey),
+                        state: currentStep >= 3
+                            ? StepState.complete
+                            : StepState.indexed,
+                        stepStyle: currentStep >= 3
+                            ? const StepStyle(
+                                color: GlobalVariables.secondaryColor)
+                            : const StepStyle(color: Colors.grey),
                       )
                     ],
                   ),

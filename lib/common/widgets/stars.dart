@@ -13,7 +13,7 @@ class Stars extends StatelessWidget {
       itemCount: 5,
       rating:  rating,
       itemSize: 15,
-      itemBuilder: (context, index) => Icon(
+      itemBuilder: (context, index) => const Icon(
         Icons.star,
         color: GlobalVariables.secondaryColor,
       ),
