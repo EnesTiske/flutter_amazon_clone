@@ -43,6 +43,29 @@ As I work on improving this application, I plan to add the following features:
 - Multi-language support to cater to a broader audience.
 - Improved error handling and user feedback for transactions to enhance overall usability.
 
+## Authentication System
+
+![Screenshot 2025-01-18 at 23 38 07](https://github.com/user-attachments/assets/aa672b80-e3ef-4a43-bd74-031b9c96c4c1)
+
+### QR Code Authentication
+The application implements a secure QR code-based authentication system that allows users to quickly log in to their web accounts using their mobile devices. This feature works as follows:
+
+1. Web Interface generates a unique QR code containing a temporary session token
+2. User scans this QR code using the mobile application
+3. Mobile app verifies the token and establishes a secure connection
+4. Upon successful verification, the web interface automatically logs in the user
+
+### JWT Authentication
+The application uses JSON Web Tokens (JWT) for secure authentication and authorization:
+
+- Each successful login generates a unique JWT token
+- Tokens are encrypted and contain user identification information
+- All API requests require valid JWT tokens in the authorization header
+- Tokens automatically expire after a set period for enhanced security
+- Refresh token mechanism is implemented for seamless user experience
+
+This dual-layer authentication system provides both security and convenience, allowing users to safely access their accounts across multiple devices.
+
 ## Installation and Setup Guide
 
 ### Prerequisites
