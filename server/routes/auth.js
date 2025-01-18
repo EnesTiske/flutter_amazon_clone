@@ -85,5 +85,82 @@ authRouter.get("/", auth, async (req, res) => {
   res.json({ ...user._doc, token: req.token });
 });
 
+// Temporary Map to store QR tokens
+const qrTokens = new Map();
+
+// Helper function to generate random session ID
+const generateSessionId = () => {
+  return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+};
+
+// QR token generation endpoint
+authRouter.post('/api/generate-qr-token', (req, res) => {
+  try {
+    // Create a simple session ID
+    const sessionId = generateSessionId();
+    
+    // Store the session and set status as 'pending'
+    qrTokens.set(sessionId, {
+      status: 'pending',
+      createdAt: Date.now()
+    });
+
+    // Clear session after 30 seconds
+    setTimeout(() => {
+      qrTokens.delete(sessionId);
+    }, 30000);
+
+    res.json({ token: sessionId });
+  } catch (error) {
+    res.status(500).json({ message: 'Error occurred while generating token' });
+  }
+});
+
+// QR token status check endpoint
+authRouter.get('/api/check-qr-status/:token', (req, res) => {
+  const { token } = req.params;
+  const sessionData = qrTokens.get(token);
+
+  if (!sessionData) {
+    return res.json({ status: 'expired' });
+  }
+
+  res.json({ 
+    status: sessionData.status,
+    ...(sessionData.status === 'authenticated' ? {
+      token: sessionData.authToken,
+      userInfo: sessionData.userInfo
+    } : {})
+  });
+});
+
+// QR code verification endpoint from mobile app
+authRouter.post('/api/verify-qr-token', async (req, res) => {
+  const { qrToken, userInfo } = req.body;
+
+  if (!qrTokens.has(qrToken)) {
+    return res.status(400).json({ message: 'Invalid or expired QR token' });
+  }
+
+  try {
+    // Create a new auth token for user
+    const authToken = jwt.sign({ 
+      email: userInfo.email,
+      userId: userInfo.userId 
+    }, "passwordKey", { expiresIn: '7d' });
+
+    // Update session status
+    qrTokens.set(qrToken, {
+      status: 'authenticated',
+      authToken,
+      userInfo,
+      authenticatedAt: Date.now()
+    });
+
+    res.json({ message: 'QR code successfully verified' });
+  } catch (error) {
+    res.status(500).json({ message: 'Error occurred during verification' });
+  }
+});
 
 module.exports = authRouter;

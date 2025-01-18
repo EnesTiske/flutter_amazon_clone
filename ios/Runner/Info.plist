@@ -45,7 +45,9 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>QR kod taraması için kamera izni gerekiyor</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-<string>We want image for product!</string>
+	<string>QR kod okumak için galeriye erişim izni gerekiyor</string>
 </dict>
 </plist>

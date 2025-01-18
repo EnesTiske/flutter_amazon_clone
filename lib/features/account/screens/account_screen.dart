@@ -4,6 +4,7 @@ import 'package:amazon_clone_tutorial/features/account/widgets/orders.dart';
 import 'package:amazon_clone_tutorial/features/account/widgets/top_buttons.dart';
 import 'package:flutter/material.dart';
 
+
 class AccountScreen extends StatelessWidget {
   const AccountScreen({super.key});
 
