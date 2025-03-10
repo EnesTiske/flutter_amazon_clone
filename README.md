@@ -64,8 +64,8 @@ This dual-layer authentication system provides both security and convenience, al
 
 1. Clone the project:
 ```bash
-git clone https://github.com/yourusername/mobile-banking-application.git
-cd mobile-banking-application
+git clone https://github.com/EnesTiske/flutter_amazon_clone.git
+cd flutter_amazon_clone
 ```
 
 2. For the backend server:
